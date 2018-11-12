@@ -1,0 +1,12 @@
+config.state=
+{
+	file:
+	{
+		meta:{},
+		data:{}
+	},
+	view:
+	{
+		path:[]
+	}
+}
