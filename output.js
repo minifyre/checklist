@@ -12,7 +12,7 @@ output.item=function(state,selected,id)
 	{
 		attrsDesc.contenteditable=true
 		attrsDesc.on.render=({target})=>target.focus()
-		attrsDesc.on.blur=blur
+		attrsDesc.on.blur=evt=>input.blur(state,evt)
 	}
 
 	return v('li',attrs,
@@ -20,24 +20,26 @@ output.item=function(state,selected,id)
 		v('span.desc',attrsDesc,item.text)
 	)
 }
+output.list=function(state,id,i,path)
+{
+	const
+	item=state.file.data[id],
+	selected=path[i+1],
+	items=item.list
+	.filter(x=>!!x)
+	.map(id=>output.item(state,selected,id))
+
+	return v('ul',{},...items)
+}
 output.render=function(state)
 {
 	const
-	[blur,pointerup]=[input.blur,input].map(fn=>evt=>fn(state,evt)),
+	pointerup=evt=>input(state,evt),
+	mkList=(...args)=>output.list(state,...args),
 	lists=['index',...state.view.path]
 	//an empty item exists on the end after a splice/pop call, b4 length is changed
 	.filter(x=>!!x)
-	.map(function(listId,i,path)
-	{
-		const
-		item=state.file.data[listId],
-		selected=path[i+1],
-		items=item.list
-		.filter(x=>!!x)
-		.map(id=>output.item(state,selected,id))
-
-		return v('ul',{},...items)
-	}),
+	.map(mkList),
 	showBack=!!state.view.path.length,
 	placeholder=showBack?state.view.path.map(id=>state.file.data[id].text).join('/')+'/':'search'
 
