@@ -9,7 +9,7 @@ output.render=function(state)
 	{
 		const
 		item=state.file.data[listId],
-		selected=path[i-1],
+		selected=path[i+1],
 		items=item.list
 		//an empty item exists on the end after a splice call, b4 length is changed
 		.filter(x=>!!x)
