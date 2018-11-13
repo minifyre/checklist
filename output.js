@@ -25,21 +25,15 @@ output.list=function(state,id,i,path)
 	const
 	item=state.file.data[id],
 	selected=path[i+1],
-	items=item.list
-	.filter(x=>!!x)
-	.map(id=>output.item(state,selected,id))
+	items=util.mapEmpty(item.list,id=>output.item(state,selected,id))
 
 	return v('ul',{},...items)
 }
 output.render=function(state)
 {
 	const
-	pointerup=evt=>input(state,evt),
-	mkList=(...args)=>output.list(state,...args),
-	lists=['index',...state.view.path]
-	//an empty item exists on the end after a splice/pop call, b4 length is changed
-	.filter(x=>!!x)
-	.map(mkList),
+	[pointerup,mkList]=[input,output.list].map(fn=>util.curry(fn,state)),
+	lists=util.mapEmpty(['index',...state.view.path],mkList)
 	showBack=!!state.view.path.length,
 	placeholder=showBack?state.view.path.map(id=>state.file.data[id].text).join('/')+'/':'search'
 
