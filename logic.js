@@ -20,6 +20,15 @@ logic.normalize=function(state)
 	if(!state.file.data.index) state.file.data.index=logic.item({id:'index'})
 	return state
 }
+logic.open=function(state,id)
+{
+	const
+	path=['index',...state.view.path],
+	i=	path.map(id=>state.file.data[id])
+			.findIndex(item=>item.list.indexOf(id)!==-1)
+	//close sibling lists & add to the end
+	state.view.path=[...path.slice(1,i+1),id]
+}
 logic.openToggle=function(state,id)
 {
 	const i=state.view.path.indexOf(id)
