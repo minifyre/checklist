@@ -23,7 +23,8 @@ input.open=function(state,{target})
 {
 	const {contenteditable,id}=target
 
-	if(contenteditable||state.view.path.indexOf(id)!==-1) return
+	if(contenteditable) return
+	if(state.view.path.indexOf(id)!==-1) return logic.openToggle(state,id)
 
 	logic.open(state,id)
 	//new item on empty list

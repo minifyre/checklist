@@ -20,6 +20,12 @@ logic.normalize=function(state)
 	if(!state.file.data.index) state.file.data.index=logic.item({id:'index'})
 	return state
 }
+logic.openToggle=function(state,id)
+{
+	const i=state.view.path.indexOf(id)
+	if(i===-1) return console.error(`${id} was not open`)
+	state.view.path=state.view.path.slice(0,i)
+}
 logic.listLowest=function({view})//retrieves the id of the youngest list
 {//@todo come up with a better name
 	const {length}=view.path
