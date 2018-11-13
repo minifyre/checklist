@@ -5,7 +5,7 @@ output.header=function(state)
 	placeholder=showBack?state.view.path.map(id=>state.file.data[id].text).join('/')+'/':'search',
 	{length}=state.view.selected,
 	//show edit button if only 1 item is selected
-	filter=length===1?x=>x!=='edit':()=>true
+	filter=length===1?()=>true:x=>x!=='edit',
 	btns=!length?
 	[
 		v('button',{data:{pointerup:'backOrOpts'}},showBack?'<':'='),
