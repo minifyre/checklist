@@ -1,5 +1,14 @@
 logic.edit=(state,id='')=>state.view.edit=id
 logic.item=(...opts)=>util.mk({complete:false,text:'',list:[]},...opts)
+logic.itemAdd=function(state,item,parentId='index',at=-1)
+{
+	const {id}=item,
+	siblings=state.file.data[parentId].list
+
+	state.file.data[id]=item
+	siblings.splice(at>-1?at:siblings.length,0,id)
+	logic.edit(state,id)
+}
 logic.normalize=function(state)
 {
 	if(!state.file.data.index) state.file.data.index=logic.item({id:'index'})
