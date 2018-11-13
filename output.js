@@ -40,7 +40,7 @@ output.item=function(state,opened,id)
 	else if(state.view.selected.includes(id)) attrs.data.selected=true
 
 	return v('li',attrs,
-		v('span.icon',{data:{pointerup:'itemOpts'}},icon),
+		v('span.icon',{data:{pointerup:'toggleSelect'}},icon),
 		v('span.desc',attrsDesc,item.text)
 	)
 }

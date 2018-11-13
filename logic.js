@@ -56,3 +56,8 @@ logic.remove=function(state,id)
 
 	delete state.file.data[id]
 }
+logic.toggleSelect=function(state,id)
+{
+	const i=state.view.selected.indexOf(id)
+	i!==-1?state.view.selected.splice(i,1):state.view.selected.push(id)
+}

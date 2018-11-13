@@ -8,7 +8,7 @@ input.backOrOpts=function(state,evt)
 }
 input.back=logic.back
 input.blur=function(state,{target})
-{
+{//@todo this should rerender parent's length icon
 	const {id}=target.parentElement
 
 	if(util.empty(target.innerText)) logic.remove(state,id)
@@ -30,11 +30,8 @@ input.open=function(state,{target})
 	//new item on empty list
 	if(!state.file.data[id].list.length) input.add(state)
 }
-input.itemOpts=function(state,evt)
-{
-
-}
 input.opts=function(state,evt)
 {
-	console.log('opts')
+	console.log('options menu')
 }
+input.toggleSelect=(state,{target})=>logic.toggleSelect(state,target.parentElement.id)
