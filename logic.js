@@ -20,6 +20,11 @@ logic.normalize=function(state)
 	if(!state.file.data.index) state.file.data.index=logic.item({id:'index'})
 	return state
 }
+logic.listLowest=function({view})//retrieves the id of the youngest list
+{//@todo come up with a better name
+	const {length}=view.path
+	return length?view.path[length-1]:'index'
+}
 logic.remove=function(state,id)
 {
 	//@todo delete all children

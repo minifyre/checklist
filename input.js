@@ -1,10 +1,6 @@
 input.add=function(state)
 {
-	const
-	{length}=state.view.path,
-	parentId=length?state.view.path[length-1]:'index'
-
-	logic.itemAdd(state,logic.item(),parentId)
+	logic.itemAdd(state,logic.item(),logic.listLowest(state))
 }
 input.backOrOpts=function(state,evt)
 {
