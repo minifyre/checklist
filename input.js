@@ -1,15 +1,12 @@
 input.add=function(state)
 {
-	const
-	{length}=state.view.path,
-	parentId=length?state.view[length-1]:'index'
-
-	logic.itemAdd(state,logic.item(),parentId)
+	logic.itemAdd(state,logic.item(),logic.listLowest(state))
 }
-input.back=function(state,evt)
+input.backOrOpts=function(state,evt)
 {
-
+	(state.view.path.length?input.back:input.opts)(state,evt)
 }
+input.back=logic.back
 input.blur=function(state,{target})
 {
 	const {id}=target
@@ -18,8 +15,22 @@ input.blur=function(state,{target})
 	else logic.itemUpdate(state,id,{text:target.innerText})
 
 	logic.edit(state)
-}
-input.open=function(state,evt)
-{
 
+	//if list is empty, go back (no bugs on empty index list)
+	if(!state.file.data[logic.listLowest(state)].list.length) logic.back(state)
+}
+input.open=function(state,{target})
+{
+	const {contenteditable,id}=target
+
+	if(contenteditable) return
+	if(state.view.path.indexOf(id)!==-1) return logic.openToggle(state,id)
+
+	logic.open(state,id)
+	//new item on empty list
+	if(!state.file.data[id].list.length) input.add(state)
+}
+input.opts=function(state,evt)
+{
+	console.log('opts')
 }
