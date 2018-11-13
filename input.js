@@ -19,10 +19,18 @@ input.blur=function(state,{target})
 	else logic.itemUpdate(state,id,{text:target.innerText})
 
 	logic.edit(state)
+	//@todo if item was only child, go back
 }
-input.open=function(state,evt)
+input.open=function(state,{target})
 {
+	const {contenteditable,id}=target
 
+	if(contenteditable||state.view.path.indexOf(id)!==-1) return
+
+	logic.open(state,id)
+	//new item on empty list
+	if(!state.file.data[id].list.length) input.add(state)
+}
 input.opts=function(state,evt)
 {
 	console.log('opts')
