@@ -61,25 +61,26 @@ logic.normalize=x=>x
 const output=x=>output.render(x)
 output.render=x=>x
 
+function input(state,evt)
+{
+	const
+	{target,type}=evt,
+	attr=`data-${type}`,
+	el=util.findParent(target,`[${attr}]`)
+
+	if(!el) return
+
+	const
+	fn=el.getAttribute(attr)
+	return input[fn](state,evt)
+}
+
 const silo=
 {
 	config,
 	util,
 	logic,
-	input:function(evt)
-	{
-		const
-		{target,type}=evt,
-		attr=`data-${type}`,
-		el=util.findParent(target,`[${attr}]`)
-	
-		if(!el) return
-	
-		const
-		editor=util.evt2customEl(evt),
-		fn=el.getAttribute(attr)
-		return input[fn](evt,editor)
-	},
+	input,
 	output
 }
 
