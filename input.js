@@ -6,9 +6,13 @@ input.add=function(state)
 
 	logic.itemAdd(state,logic.item(),parentId)
 }
+input.backOrOpts=function(state,evt)
+{
+	(state.view.path.length?input.back:input.opts)(state,evt)
+}
 input.back=function(state,evt)
 {
-
+	console.log('back')
 }
 input.blur=function(state,{target})
 {
@@ -22,4 +26,7 @@ input.blur=function(state,{target})
 input.open=function(state,evt)
 {
 
+input.opts=function(state,evt)
+{
+	console.log('opts')
 }
