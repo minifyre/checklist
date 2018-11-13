@@ -2,7 +2,7 @@ input.add=function(state)
 {
 	const
 	{length}=state.view.path,
-	parentId=length?state.view[length-1]:'index'
+	parentId=length?state.view.path[length-1]:'index'
 
 	logic.itemAdd(state,logic.item(),parentId)
 }
