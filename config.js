@@ -7,6 +7,7 @@ config.state=
 	},
 	view:
 	{
+		edit:'',
 		path:[]
 	}
 }
