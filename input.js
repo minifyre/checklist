@@ -8,8 +8,8 @@ input.backOrOpts=function(state,evt)
 }
 input.back=logic.back
 input.blur=function(state,{target})
-{
-	const {id}=target
+{//@todo this should rerender parent's length icon
+	const {id}=target.parentElement
 
 	if(util.empty(target.innerText)) logic.remove(state,id)
 	else logic.itemUpdate(state,id,{text:target.innerText})
@@ -21,9 +21,9 @@ input.blur=function(state,{target})
 }
 input.open=function(state,{target})
 {
-	const {contenteditable,id}=target
+	const {id}=target
 
-	if(contenteditable) return
+	if(target.querySelector('[contenteditable]')) return
 	if(state.view.path.indexOf(id)!==-1) return logic.openToggle(state,id)
 
 	logic.open(state,id)
@@ -32,5 +32,6 @@ input.open=function(state,{target})
 }
 input.opts=function(state,evt)
 {
-	console.log('opts')
+	console.log('options menu')
 }
+input.toggleSelect=(state,{target})=>logic.toggleSelect(state,target.parentElement.id)

@@ -8,6 +8,7 @@ config.state=
 	view:
 	{
 		edit:'',
-		path:[]
+		path:[],
+		selected:[]
 	}
 }

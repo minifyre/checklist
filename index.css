@@ -4,3 +4,17 @@ body
 	margin:0;
 	padding:0;
 }
+.icon
+{
+	background-color:#2222;
+	color:#fff;
+	content:attr(data-icon)
+}
+[data-opened]
+{
+	font-weight:bold;
+}
+[data-selected]
+{
+	text-decoration:underline;
+}

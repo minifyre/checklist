@@ -71,7 +71,7 @@ function input(state,evt)
 	if(!el) return
 
 	const fn=el.getAttribute(attr)
-	return input[fn](state,evt)
+	return input[fn](state,Object.assign({},evt,{target:el}))
 }
 
 const silo=
