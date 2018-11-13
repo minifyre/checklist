@@ -70,8 +70,7 @@ function input(state,evt)
 
 	if(!el) return
 
-	const
-	fn=el.getAttribute(attr)
+	const fn=el.getAttribute(attr)
 	return input[fn](state,evt)
 }
 
