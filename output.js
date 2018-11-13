@@ -1,3 +1,25 @@
+output.item=function(state,selected,id)
+{
+	const
+	item=state.file.data[id],
+	icon=item.list.length||'+',
+	attrs={data:{pointerup:'open'},id,on:{}},
+	attrsDesc={on:{}}
+	//@todo id could be an issue if child can have multiple parents
+
+	if(id===selected) attrs.data.selected=true
+	if(id===state.view.edit)
+	{
+		attrsDesc.contenteditable=true
+		attrsDesc.on.render=({target})=>target.focus()
+		attrsDesc.on.blur=blur
+	}
+
+	return v('li',attrs,
+		v('span.icon',{data:{pointerup:'itemOpts'}},icon),
+		v('span.desc',attrsDesc,item.text)
+	)
+}
 output.render=function(state)
 {
 	const
@@ -12,28 +34,7 @@ output.render=function(state)
 		selected=path[i+1],
 		items=item.list
 		.filter(x=>!!x)
-		.map(function(id)
-		{
-			const
-			item=state.file.data[id],
-			icon=item.list.length||'+',
-			attrs={data:{pointerup:'open'},id,on:{}},
-			attrsDesc={on:{}}
-			//@todo id could be an issue if child can have multiple parents
-
-			if(id===selected) attrs.data.selected=true
-			if(id===state.view.edit)
-			{
-				attrsDesc.contenteditable=true
-				attrsDesc.on.render=({target})=>target.focus()
-				attrsDesc.on.blur=blur
-			}
-
-			return v('li',attrs,
-				v('span.icon',{data:{pointerup:'itemOpts'}},icon),
-				v('span.desc',attrsDesc,item.text)
-			)
-		})
+		.map(id=>output.item(state,selected,id))
 
 		return v('ul',{},...items)
 	}),
