@@ -9,6 +9,11 @@ logic.itemAdd=function(state,item,parentId='index',at=-1)
 	siblings.splice(at>-1?at:siblings.length,0,id)
 	logic.edit(state,id)
 }
+logic.itemUpdate=function(state,id,opts)//@todo have a text specifc fn?
+{
+	delete opts.id//don't allow changes to id
+	Object.assign(state.file.data[id],opts)
+}
 logic.normalize=function(state)
 {
 	if(!state.file.data.index) state.file.data.index=logic.item({id:'index'})
