@@ -1,6 +1,10 @@
-input.add=function(state,evt)
+input.add=function(state)
 {
+	const
+	{length}=state.view.path,
+	parentId=length?state.view[length-1]:'index'
 
+	logic.itemAdd(state,logic.item(),parentId)
 }
 input.back=function(state,evt)
 {
