@@ -9,7 +9,7 @@ input.backOrOpts=function(state,evt)
 input.back=logic.back
 input.blur=function(state,{target})
 {
-	const {id}=target
+	const {id}=target.parentElement
 
 	if(util.empty(target.innerText)) logic.remove(state,id)
 	else logic.itemUpdate(state,id,{text:target.innerText})
@@ -21,14 +21,18 @@ input.blur=function(state,{target})
 }
 input.open=function(state,{target})
 {
-	const {contenteditable,id}=target
+	const {id}=target
 
-	if(contenteditable) return
+	if(target.querySelector('[contenteditable]')) return
 	if(state.view.path.indexOf(id)!==-1) return logic.openToggle(state,id)
 
 	logic.open(state,id)
 	//new item on empty list
 	if(!state.file.data[id].list.length) input.add(state)
+}
+input.itemOpts=function(state,evt)
+{
+
 }
 input.opts=function(state,evt)
 {
