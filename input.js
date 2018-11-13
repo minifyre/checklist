@@ -15,7 +15,9 @@ input.blur=function(state,{target})
 	else logic.itemUpdate(state,id,{text:target.innerText})
 
 	logic.edit(state)
-	//@todo if item was only child, go back
+
+	//if list is empty, go back (no bugs on empty index list)
+	if(!state.file.data[logic.listLowest(state)].list.length) logic.back(state)
 }
 input.open=function(state,{target})
 {
