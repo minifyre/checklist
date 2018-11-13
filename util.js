@@ -1,0 +1,1 @@
+util.empty=txt=>!txt.replace(/\s/g,'').length
