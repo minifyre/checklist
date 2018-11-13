@@ -50,9 +50,6 @@ util.mkCustomEl=async function(url='',customEl,customMkr)
 util.mkState=function(opts)
 {
 	const state=Object.assign({},config.state,opts)
-
-	console.log(state)
-
 	state.file.id=util.id()
 	state.view.id=util.id()
 	state.view.file=state.file.id
