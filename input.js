@@ -10,10 +10,7 @@ input.backOrOpts=function(state,evt)
 {
 	(state.view.path.length?input.back:input.opts)(state,evt)
 }
-input.back=function(state,evt)
-{
-	console.log('back')
-}
+input.back=logic.back
 input.blur=function(state,{target})
 {
 	const {id}=target

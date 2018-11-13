@@ -1,3 +1,4 @@
+logic.back=state=>state.view.path.pop()
 logic.edit=(state,id='')=>state.view.edit=id
 logic.item=(...opts)=>util.mk({complete:false,text:'',list:[]},...opts)
 logic.itemAdd=function(state,item,parentId='index',at=-1)
