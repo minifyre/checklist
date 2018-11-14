@@ -23,18 +23,22 @@ body
 main,
 header
 {
+	/*@todo have js detect if there is a light theme
+	and then divide text color into .dark & .light 
+	& apply classes to main and header*/
 	color:#fff;
 	display:flex;
 	flex-direction:row;
 	min-height:var(--height);
-	text-shadow:0 0 0.1rem #000;
 	width:100%;
 }
 input,
 button
 {
 	align-items:center;
+	background-color:transparent;
 	border:0;
+	color:#fff;
 	display:flex;
 	height:var(--height);
 	min-width:var(--height);
@@ -71,6 +75,18 @@ header::after,
 	position:absolute;
 	width:100%;
 }
+.search
+{
+	background:transparent;
+	flex:1 1 auto;
+	padding:0 var(--margin);
+	opacity:0.5;
+}
+.search::placeholder
+{
+	color:#fff;
+}
+
 .icon
 {
 	background-color:#fff2;
