@@ -58,7 +58,7 @@ output.render=function(state)
 	const
 	[pointerup,mkList]=[input,output.list].map(fn=>util.curry(fn,state)),
 	lists=util.mapEmpty(['index',...state.view.path],mkList),
-	main=v('main',{data:{view:'list'},on:{pointerup}},...lists)
+	main=v('main',{data:{view:state.view.layout},on:{pointerup}},...lists)
 
 	return [output.header(state),main]
 }

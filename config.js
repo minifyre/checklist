@@ -8,6 +8,7 @@ config.state=
 	view:
 	{
 		edit:'',
+		layout:'list',
 		path:[],
 		selected:[]
 	}
