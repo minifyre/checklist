@@ -1,15 +1,63 @@
+:root /*variables*/
+{
+	--height:1.5rem;
+}
+/*resets*/
+*
+{
+	box-sizing:border-box;
+}
 html,
 body
 {
 	margin:0;
 	padding:0;
 }
+main,
+header
+{
+	display:flex;
+	flex-direction:row;
+	min-height:var(--height);
+	width:100%;
+}
+input,
+button
+{
+	align-items:center;
+	border:0;
+	display:flex;
+	height:var(--height);
+	min-width:var(--height);
+}
+button
+{
+	justify-content:center;
+}
+/*lists*/
+[data-view="list"] ul
+{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+[data-view="list"] li
+{
+	align-items:center;
+	display:flex;
+	height:var(--height);
+	/* tmp */
+	border-bottom:1px solid #222;
+}
 .icon
 {
-	background-color:#2222;
-	color:#fff;
-	content:attr(data-icon)
+	height:100%;
 }
+.desc
+{
+	margin:0 0.2rem;
+}
+/*item states*/
 [data-opened]
 {
 	font-weight:bold;
