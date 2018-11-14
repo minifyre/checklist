@@ -12,6 +12,7 @@ output.header=function(state)
 		v('input.stretch',{placeholder,type:'text'}),
 		v('button',{data:{pointerup:'add'}},'+')
 	]:
+	//repeat is to mark completed items in the list as uncompleted (move to list opts & add shuffle?)
 	'complete,delete,repeat,deselect,edit'
 	.split(',')
 	.filter(filter)
@@ -27,7 +28,7 @@ output.item=function(state,opened,id)
 	//@todo id attr could be an issue if child can have multiple parents 
 		//& thus show up multiple times
 	attrs={data:{pointerup:'open'},id,on:{}},
-	attrsDesc={on:{}}
+	attrsDesc={data:{},on:{}}
 
 	if(id===opened) attrs.data.opened=true
 
@@ -38,6 +39,8 @@ output.item=function(state,opened,id)
 		attrsDesc.on.blur=evt=>input.blur(state,evt)
 	}
 	else if(state.view.selected.includes(id)) attrs.data.selected=true
+
+	if(item.complete) attrsDesc.data.completed=true
 
 	return v('li',attrs,
 		v('button.icon',{data:{pointerup:'toggleSelect'}},icon),

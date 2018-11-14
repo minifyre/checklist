@@ -73,6 +73,10 @@ header::after,
 	margin:0 var(--margin);
 }
 /*item states*/
+[data-completed]
+{
+	text-decoration:line-through;
+}
 [data-opened]
 {
 	font-weight:bold;
