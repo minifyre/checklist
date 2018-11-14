@@ -59,7 +59,7 @@ output.list=function(state,id,i,path)
 	const
 	item=state.file.data[id],
 	opened=path[i+1],
-	items=util.mapEmpty(item.list,id=>output.item(state,opened,id))
+	list=item.list.filter(x=>!!x),
 	//ignore the first item as that goes to the header
 	theme=util.themeGradient(state.view.theme,list.length+1).slice(1)
 	items=util.mapEmpty(item.list,(id,i)=>output.item(state,opened,id,theme[i]))
