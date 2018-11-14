@@ -75,6 +75,9 @@ logic.remove=function(state,id)
 
 	delete state.file.data[id]
 }
+//@todo if child items are marked uncomplete, 
+	//go through their parents & mark them uncomplete as well
+logic.repeat=x=>x
 logic.toggleSelect=function(state,id)
 {//@todo limit selection to one list 
 	//or disable delete button if items on multiple levels are selected?
