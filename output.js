@@ -49,6 +49,17 @@ output.item=function(state,opened,id,color)
 	else if(state.view.selected.includes(id)) attrs.data.selected=true
 
 	if(item.complete) attrsDesc.data.completed=true
+	//progress bars
+	const
+	done=	item.complete?1:
+			!item.list.length?0:
+			item.list
+			.map(id=>state.file.data[id])
+			.filter(item=>item.complete)
+			.length/item.list.length,
+	percent=done*100
+
+	attrsDesc.style=`background-image:linear-gradient(to right,transparent ${percent}%, #0003 ${percent}%)`
 
 	return v('li',attrs,
 		v('button.icon',{data:{pointerup:'toggleSelect'}},icon),
