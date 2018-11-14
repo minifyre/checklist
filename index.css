@@ -34,6 +34,9 @@ button
 {
 	justify-content:center;
 }
+/*layout defaults*/
+.stretch{flex:1 1 auto;}
+.shrink{flex:0 0 auto;}
 /*lists*/
 [data-view="list"] ul
 {

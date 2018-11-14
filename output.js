@@ -9,7 +9,7 @@ output.header=function(state)
 	btns=!length?
 	[
 		v('button',{data:{pointerup:'backOrOpts'}},showBack?'<':'='),
-		v('input',{placeholder,type:'text'}),
+		v('input.stretch',{placeholder,type:'text'}),
 		v('button',{data:{pointerup:'add'}},'+')
 	]:
 	'complete,delete,repeat,deselect,edit'
