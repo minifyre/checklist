@@ -10,6 +10,7 @@ config.state=
 		edit:'',
 		layout:'list',
 		path:[],
-		selected:[]
+		selected:[],
+		theme:['red','darkorange','#fc0']
 	}
 }

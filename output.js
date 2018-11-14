@@ -27,14 +27,14 @@ output.header=function(state)
 	
 	return v('header',{on:{pointerup:evt=>input(state,evt)}},...btns)
 }
-output.item=function(state,opened,id)
+output.item=function(state,opened,id,color)
 {
 	const
 	item=state.file.data[id],
 	icon=item.list.length||'+',
 	//@todo id attr could be an issue if child can have multiple parents 
 		//& thus show up multiple times
-	attrs={data:{pointerup:'open'},id,on:{}},
+	attrs={data:{pointerup:'open'},id,on:{},style:`background-color:${color};`},
 	attrsDesc={data:{},on:{}}
 
 	if(id===opened) attrs.data.opened=true
@@ -60,6 +60,9 @@ output.list=function(state,id,i,path)
 	item=state.file.data[id],
 	opened=path[i+1],
 	items=util.mapEmpty(item.list,id=>output.item(state,opened,id))
+	//ignore the first item as that goes to the header
+	theme=util.themeGradient(state.view.theme,list.length+1).slice(1)
+	items=util.mapEmpty(item.list,(id,i)=>output.item(state,opened,id,theme[i]))
 
 	return v('ul',{},...items)
 }

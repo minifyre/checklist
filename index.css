@@ -23,9 +23,11 @@ body
 main,
 header
 {
+	color:#fff;
 	display:flex;
 	flex-direction:row;
 	min-height:var(--height);
+	text-shadow:0 0 0.1rem #000;
 	width:100%;
 }
 input,
@@ -71,11 +73,14 @@ header::after,
 }
 .icon
 {
+	background-color:#fff2;
 	height:100%;
 }
 .desc
 {
-	margin:0 var(--margin);
+	flex:1 1 auto;
+	padding:0 var(--margin);
+	min-height:100%;
 }
 /*item states*/
 [data-completed]
