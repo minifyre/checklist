@@ -9,7 +9,7 @@ output.header=function(state)
 	btns=!length?
 	[
 		v('button',{data:{pointerup:'backOrOpts'}},showBack?'<':'='),
-		v('input.stretch',{placeholder,type:'text'}),
+		v('input.search',{placeholder,type:'text'}),
 		v('button',{data:{pointerup:'add'}},'+')
 	]:
 	//repeat is to mark completed items in the list as uncompleted (move to list opts & add shuffle?)
@@ -23,9 +23,10 @@ output.header=function(state)
 		if(!input[act]) attrs.disabled='disabled'
 
 		return v('button',attrs,act)
-	})
-	
-	return v('header',{on:{pointerup:evt=>input(state,evt)}},...btns)
+	}),
+	style=`background:${state.view.theme[0]};`
+
+	return v('header',{on:{pointerup:evt=>input(state,evt)},style},...btns)
 }
 output.item=function(state,opened,id,color)
 {
