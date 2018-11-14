@@ -12,10 +12,18 @@ output.header=function(state)
 		v('input.stretch',{placeholder,type:'text'}),
 		v('button',{data:{pointerup:'add'}},'+')
 	]:
+	//repeat is to mark completed items in the list as uncompleted (move to list opts & add shuffle?)
 	'complete,delete,repeat,deselect,edit'
 	.split(',')
 	.filter(filter)
-	.map(act=>v('button',{data:{pointerup:act}},act))
+	.map(function(act)
+	{
+		const attrs={data:{pointerup:act}}
+
+		if(!input[act]) attrs.disabled='disabled'
+
+		return v('button',attrs,act)
+	})
 	
 	return v('header',{on:{pointerup:evt=>input(state,evt)}},...btns)
 }
@@ -27,7 +35,7 @@ output.item=function(state,opened,id)
 	//@todo id attr could be an issue if child can have multiple parents 
 		//& thus show up multiple times
 	attrs={data:{pointerup:'open'},id,on:{}},
-	attrsDesc={on:{}}
+	attrsDesc={data:{},on:{}}
 
 	if(id===opened) attrs.data.opened=true
 
@@ -38,6 +46,8 @@ output.item=function(state,opened,id)
 		attrsDesc.on.blur=evt=>input.blur(state,evt)
 	}
 	else if(state.view.selected.includes(id)) attrs.data.selected=true
+
+	if(item.complete) attrsDesc.data.completed=true
 
 	return v('li',attrs,
 		v('button.icon',{data:{pointerup:'toggleSelect'}},icon),
@@ -58,7 +68,7 @@ output.render=function(state)
 	const
 	[pointerup,mkList]=[input,output.list].map(fn=>util.curry(fn,state)),
 	lists=util.mapEmpty(['index',...state.view.path],mkList),
-	main=v('main',{data:{view:'list'},on:{pointerup}},...lists)
+	main=v('main',{data:{view:state.view.layout},on:{pointerup}},...lists)
 
 	return [output.header(state),main]
 }

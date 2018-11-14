@@ -9,6 +9,11 @@
 {
 	box-sizing:border-box;
 }
+[disabled]
+{
+	filter:grayscale(100%);
+	opacity:0.5;
+}
 html,
 body
 {
@@ -73,6 +78,10 @@ header::after,
 	margin:0 var(--margin);
 }
 /*item states*/
+[data-completed]
+{
+	text-decoration:line-through;
+}
 [data-opened]
 {
 	font-weight:bold;

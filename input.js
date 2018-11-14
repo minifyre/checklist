@@ -19,6 +19,7 @@ input.blur=function(state,{target})
 	//if list is empty, go back (no bugs on empty index list)
 	if(!state.file.data[logic.listLowest(state)].list.length) logic.back(state)
 }
+input.complete=state=>logic.complete(state)
 input.open=function(state,{target})
 {
 	const {id}=target

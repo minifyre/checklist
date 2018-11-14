@@ -1,4 +1,23 @@
 logic.back=state=>state.view.path.pop()
+logic.complete=function(state,deselectAll=true)
+{
+	const
+	{data}=state.file,
+	ids=deselectAll===true?state.view.selected:deselectAll
+
+	ids
+	.map(id=>data[id])
+	.forEach(function(item)
+	{
+		//@todo can this cause overflow?
+			//put after parent is changed?
+		logic.complete(state,item.list)
+		item.complete=true
+	})
+
+	if(deselectAll) logic.deselectAll(state)
+}
+logic.deselectAll=state=>state.view.selected=[]
 logic.edit=(state,id='')=>state.view.edit=id
 logic.item=(...opts)=>util.mk({complete:false,text:'',list:[]},...opts)
 logic.itemAdd=function(state,item,parentId='index',at=-1)
@@ -56,8 +75,12 @@ logic.remove=function(state,id)
 
 	delete state.file.data[id]
 }
+//@todo if child items are marked uncomplete, 
+	//go through their parents & mark them uncomplete as well
+logic.repeat=x=>x
 logic.toggleSelect=function(state,id)
-{
+{//@todo limit selection to one list 
+	//or disable delete button if items on multiple levels are selected?
 	const i=state.view.selected.indexOf(id)
 	i!==-1?state.view.selected.splice(i,1):state.view.selected.push(id)
 }
