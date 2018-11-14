@@ -17,6 +17,7 @@
 html,
 body
 {
+	background:#222;
 	margin:0;
 	padding:0;
 }
@@ -89,7 +90,8 @@ header::after,
 
 .icon
 {
-	background-color:#fff2;
+	background:transparent;
+	border-right:1px solid #222;
 	height:100%;
 }
 .desc
