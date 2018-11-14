@@ -1,15 +1,78 @@
+:root /*variables*/
+{
+	--border:1px;/*@todo find a better rem-based measure*/
+	--height:1.5rem;
+	--margin:0.2rem;
+}
+/*resets*/
+*
+{
+	box-sizing:border-box;
+}
 html,
 body
 {
 	margin:0;
 	padding:0;
 }
+main,
+header
+{
+	display:flex;
+	flex-direction:row;
+	min-height:var(--height);
+	width:100%;
+}
+input,
+button
+{
+	align-items:center;
+	border:0;
+	display:flex;
+	height:var(--height);
+	min-width:var(--height);
+}
+button
+{
+	justify-content:center;
+}
+/*layout defaults*/
+.stretch{flex:1 1 auto;}
+.shrink{flex:0 0 auto;}
+/*lists*/
+[data-view="list"] ul
+{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+header,
+[data-view="list"] li
+{
+	align-items:center;
+	display:flex;
+	height:var(--height);
+	position: relative;
+}
+header::after,
+[data-view="list"] li::after
+{
+	background-color:#222;
+	bottom:0;
+	content:"";
+	height:var(--border);
+	position:absolute;
+	width:100%;
+}
 .icon
 {
-	background-color:#2222;
-	color:#fff;
-	content:attr(data-icon)
+	height:100%;
 }
+.desc
+{
+	margin:0 var(--margin);
+}
+/*item states*/
 [data-opened]
 {
 	font-weight:bold;
