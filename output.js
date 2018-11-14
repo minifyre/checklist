@@ -16,7 +16,14 @@ output.header=function(state)
 	'complete,delete,repeat,deselect,edit'
 	.split(',')
 	.filter(filter)
-	.map(act=>v('button',{data:{pointerup:act}},act))
+	.map(function(act)
+	{
+		const attrs={data:{pointerup:act}}
+
+		if(!input[act]) attrs.disabled='disabled'
+
+		return v('button',attrs,act)
+	})
 	
 	return v('header',{on:{pointerup:evt=>input(state,evt)}},...btns)
 }

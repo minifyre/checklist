@@ -9,6 +9,11 @@
 {
 	box-sizing:border-box;
 }
+[disabled]
+{
+	filter:grayscale(100%);
+	opacity:0.5;
+}
 html,
 body
 {
