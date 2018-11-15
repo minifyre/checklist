@@ -89,6 +89,8 @@ header::after,
 .search
 {
 	background:transparent;
+	/*icon font distorts url text*/
+	font-family:Arial, Helvetica, sans-serif;
 	flex:1 1 auto;
 	padding:0 var(--margin);
 	opacity:0.5;
