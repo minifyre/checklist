@@ -26,6 +26,7 @@ input.open=function(state,{target})
 
 	if(target.querySelector('[contenteditable]')) return
 	if(state.view.path.indexOf(id)!==-1) return logic.openToggle(state,id)
+	if(target.querySelector('[data-completed="true"]')) return
 
 	logic.open(state,id)
 	//new item on empty list
