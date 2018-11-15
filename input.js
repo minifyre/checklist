@@ -20,6 +20,7 @@ input.blur=function(state,{target})
 	if(!state.file.data[logic.listLowest(state)].list.length) logic.back(state)
 }
 input.complete=state=>logic.complete(state)
+input.deselect=logic.deselectAll
 input.open=function(state,{target})
 {
 	const {id}=target
