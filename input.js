@@ -11,7 +11,13 @@ input.blur=function(state,{target})
 {//@todo this should rerender parent's length icon
 	const {id}=target.parentElement
 
-	if(util.empty(target.innerText)) logic.remove(state,id)
+	if(util.empty(target.innerText))
+	{
+		if(util.empty(state.file.data[id].text)) logic.remove(state,id)
+		else target.innerHTML=state.file.data[id].text
+		//previous line is necessary as the text has not changed 
+			//in the virtual dom & so it will not get re-rendered
+	}
 	else logic.itemUpdate(state,id,{text:target.innerText})
 
 	logic.edit(state)
@@ -21,6 +27,12 @@ input.blur=function(state,{target})
 }
 input.complete=state=>logic.complete(state)
 input.deselect=logic.deselectAll
+input.edit=function(state)
+{
+	const id=state.view.selected[0]
+	logic.deselectAll(state)
+	logic.edit(state,id)
+}
 input.open=function(state,{target})
 {
 	const {id}=target
