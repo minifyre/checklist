@@ -61,7 +61,9 @@ logic.listLowest=function({view})//retrieves the id of the youngest list
 }
 logic.remove=function(state,id)
 {
-	//@todo delete all children
+	//delete children
+	state.file.data[id].list.forEach(id=>logic.remove(state,id))
+
 	//@todo if items chan have multiple parents, this needs to be overhauled
 
 	//delete links to item
