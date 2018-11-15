@@ -13,7 +13,7 @@ output.header=function(state)
 		v('button',{data:{pointerup:'add'}},'+')
 	]:
 	//repeat is to mark completed items in the list as uncompleted (move to list opts & add shuffle?)
-	'complete,delete,repeat,deselect,edit'
+	'complete,delete,repeat,deselect,edit'//@todo make deselect a back button ligature
 	.split(',')
 	.filter(filter)
 	.map(function(act)

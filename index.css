@@ -4,6 +4,15 @@
 	--height:1.5rem;
 	--margin:0.2rem;
 }
+/*fonts*/
+@font-face 
+{
+	font-family:'icons';
+	src:url('icons.ttf') format('truetype');
+	font-weight:normal;
+	font-style:normal;
+	unicode-range:U+E000–U+F8FF;
+}
 /*resets*/
 *
 {
@@ -41,6 +50,7 @@ button
 	border:0;
 	color:#fff;
 	display:flex;
+	font-family:'icons', Arial, sans-serif;
 	height:var(--height);
 	min-width:var(--height);
 }
@@ -64,7 +74,7 @@ header,
 	align-items:center;
 	display:flex;
 	height:var(--height);
-	position: relative;
+	position:relative;
 }
 header::after,
 [data-view="list"] li::after
