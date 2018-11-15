@@ -98,7 +98,11 @@ onload=async function()
 	state=logic(),
 	render=truth.compile(({state})=>v.render(document.body,state,output))
 
-	//@todo add tmp list items here
+	//@todo remove tmp debugging file code
+	await fetch('default.checklist.json')
+	.then(res=>res.json())
+	.then(file=>Object.assign(state.file,file))
+	.catch(console.error)
 
 	truth(state,render)
 }
