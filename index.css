@@ -103,6 +103,7 @@ header::after,
 	background:transparent;
 	border-right:1px solid #222;
 	height:100%;
+	max-width:var(--height);
 }
 .desc
 {
