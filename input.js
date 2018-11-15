@@ -26,6 +26,16 @@ input.blur=function(state,{target})
 	if(!state.file.data[logic.listLowest(state)].list.length) logic.back(state)
 }
 input.complete=state=>logic.complete(state)
+input.delete=function(state)
+{
+	//remove deleted items from path
+	const i=state.view.path.findIndex(id=>state.view.path.includes(id))
+	if(i!==-1) state.view.path=state.view.path.slice(0,i)
+
+	state.view.selected.forEach(id=>logic.remove(state,id))
+
+	logic.deselectAll(state)
+}
 input.deselect=logic.deselectAll
 input.edit=function(state)
 {
