@@ -1,3 +1,4 @@
+util.clone=x=>JSON.parse(JSON.stringify(x))
 //@todo put curry into base silo utils
 util.curry=(fn,...xs)=>(...ys)=>fn(...xs,...ys)
 

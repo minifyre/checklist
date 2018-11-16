@@ -41,6 +41,21 @@ input.delete=function(state)
 
 	logic.deselectAll(state)
 }
+input.download=function(state,evt)
+{
+	const clone=util.clone(state.file)
+	delete clone.id
+
+	const
+	file=new Blob([JSON.stringify(clone)],{type:'text/plain'}),
+	download=clone.meta.name,
+	href=URL.createObjectURL(file),
+	link=Object.assign(document.createElement('a'),{download,href})
+
+	document.body.appendChild(link)
+	link.click()
+	link.remove()
+}
 input.deselect=logic.deselectAll
 input.edit=function(state)
 {

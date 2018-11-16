@@ -10,6 +10,7 @@ output.header=function(state)
 	[
 		v('button',{data:{pointerup:'backOrOpts'}},showBack?'<':'='),
 		v('input.search',{placeholder,type:'text'}),
+		v('button',{data:{pointerup:'download'}},'v'),
 		v('button',{data:{pointerup:'add'}},'+')
 	]:
 	//repeat is to mark completed items in the list as uncompleted (move to list opts & add shuffle?)
