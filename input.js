@@ -78,5 +78,11 @@ input.opts=function(state,evt)
 {
 	console.log('options menu')
 }
+input.repeat=function(state)
+{
+	const completed=state.file.data[logic.listLowest(state)].list
+					.filter(id=>state.file.data[id].complete)
+	logic.repeat(state,...completed)
+}
 input.shuffle=state=>logic.shuffle(state)
 input.toggleSelect=(state,{target})=>logic.toggleSelect(state,target.parentElement.id)

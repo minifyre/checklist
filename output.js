@@ -15,7 +15,7 @@ output.header=function(state)
 		v('button',{data:{pointerup:'add'}},'+')
 	]:
 	//repeat is to mark completed items in the list as uncompleted (move to list opts & add shuffle?)
-	'complete,delete,repeat,deselect,edit'//@todo make deselect a back button ligature
+	'complete,delete,deselect,edit'//@todo make deselect a back button ligature
 	.split(',')
 	.filter(filter)
 	.map(function(act)
@@ -27,6 +27,12 @@ output.header=function(state)
 		return v('button',attrs,act)
 	}),
 	style=`background:${state.view.theme[0]};`
+
+	//show repeat if there is at least one completed item
+	if(state.file.data[logic.listLowest(state)].list.some(id=>state.file.data[id].complete))
+	{
+		btns.splice(2,0,v('button',{data:{pointerup:'repeat'}},'repeat'))
+	}
 
 	return v('header',{on:{pointerup:evt=>input(state,evt)},style},...btns)
 }
