@@ -10,6 +10,7 @@ output.header=function(state)
 	[
 		v('button',{data:{pointerup:'backOrOpts'}},showBack?'<':'='),
 		v('input.search',{placeholder,type:'text'}),
+		v('button',{data:{pointerup:'shuffle'}},'shuffle'),
 		v('button',{data:{pointerup:'download'}},'v'),
 		v('button',{data:{pointerup:'add'}},'+')
 	]:
