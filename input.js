@@ -21,7 +21,7 @@ input.blur=function(state,{target})
 		//previous line is necessary as the text has not changed 
 			//in the virtual dom & so it will not get re-rendered
 	}
-	else if(text.match(repeat))
+	else if(text.match(repeat))//@todo should this be moved into logic.itemAdd?
 	{
 		const
 		[replace]=text.match(repeat),//X:11-2
@@ -32,12 +32,13 @@ input.blur=function(state,{target})
 		[val,...vals]=Array(max-min+1)
 					.fill(min)
 					.map((d,i)=>d+i)
-					.map(d=>text.replace(repeat,d))
+					.map(d=>text.replace(repeat,d)),
+		parentId=logic.parent(state,id),
+		childIndex=state.file.data[parentId].list.indexOf(id)
 
 		logic.itemUpdate(state,id,{text:val})
 
-		//logic.itemAdd(state,logic.item(),logic.listLowest(state))
-
+		vals.forEach((text,i)=>logic.itemAdd(state,logic.item({text}),parentId,childIndex+i+1))
 	}
 	else logic.itemUpdate(state,id,{text})
 
