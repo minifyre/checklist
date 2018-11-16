@@ -34,6 +34,11 @@ logic.itemUpdate=function(state,id,opts)//@todo have a text specifc fn?
 	delete opts.id//don't allow changes to id
 	Object.assign(state.file.data[id],opts)
 }
+logic.listLowest=function({view})//retrieves the id of the youngest list
+{//@todo come up with a better name
+	const {length}=view.path
+	return length?view.path[length-1]:'index'
+}
 logic.normalize=function(state)
 {
 	if(!state.file.data.index) state.file.data.index=logic.item({id:'index'})
@@ -54,11 +59,12 @@ logic.openToggle=function(state,id)
 	if(i===-1) return console.error(`${id} was not open`)
 	state.view.path=state.view.path.slice(0,i)
 }
-logic.listLowest=function({view})//retrieves the id of the youngest list
-{//@todo come up with a better name
-	const {length}=view.path
-	return length?view.path[length-1]:'index'
+logic.parent=function(state,childId)
+{//@todo multiple parents will make this harder
+	return Object.entries(state.file.data)
+	.find(([_,{list}])=>list.includes(childId))[0]
 }
+
 logic.remove=function(state,id)
 {
 	if(!state.file.data[id]) return//item was already deleted
