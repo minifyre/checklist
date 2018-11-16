@@ -61,6 +61,8 @@ logic.listLowest=function({view})//retrieves the id of the youngest list
 }
 logic.remove=function(state,id)
 {
+	if(!state.file.data[id]) return//item was already deleted
+	
 	//delete children
 	state.file.data[id].list.forEach(id=>logic.remove(state,id))
 
