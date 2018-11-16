@@ -82,6 +82,7 @@ logic.remove=function(state,id)
 //@todo if child items are marked uncomplete, 
 	//go through their parents & mark them uncomplete as well
 logic.repeat=x=>x
+logic.shuffle=(state,id=logic.listLowest(state))=>util.shuffle(state.file.data[id].list)
 logic.toggleSelect=function(state,id)
 {//@todo limit selection to one list 
 	//or disable delete button if items on multiple levels are selected?
