@@ -9,16 +9,37 @@ input.backOrOpts=function(state,evt)
 input.back=logic.back
 input.blur=function(state,{target})
 {//@todo this should rerender parent's length icon
-	const {id}=target.parentElement
+	const
+	{innerText:text}=target,
+	{id}=target.parentElement,
+	repeat=/X:\d+-\d+/
 
-	if(util.empty(target.innerText))
+	if(util.empty(text))
 	{
 		if(util.empty(state.file.data[id].text)) logic.remove(state,id)
 		else target.innerHTML=state.file.data[id].text
 		//previous line is necessary as the text has not changed 
 			//in the virtual dom & so it will not get re-rendered
 	}
-	else logic.itemUpdate(state,id,{text:target.innerText})
+	else if(text.match(repeat))
+	{
+		const
+		[replace]=text.match(repeat),//X:11-2
+		[min,max]=replace.split(':')[1]//11-2
+				.split('-')//[11','2']
+				.map(d=>parseInt(d))//[11,2]
+				.sort((a,b)=>a-b),//[2,11]//sort() will keep 11 in front
+		[val,...vals]=Array(max-min+1)
+					.fill(min)
+					.map((d,i)=>d+i)
+					.map(d=>text.replace(repeat,d))
+
+		logic.itemUpdate(state,id,{text:val})
+
+		//logic.itemAdd(state,logic.item(),logic.listLowest(state))
+
+	}
+	else logic.itemUpdate(state,id,{text})
 
 	logic.edit(state)
 
