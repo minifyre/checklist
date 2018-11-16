@@ -28,8 +28,12 @@ output.header=function(state)
 	}),
 	style=`background:${state.view.theme[0]};`
 
+	//@todo this can cause an error if an item is added & then removed becaue 
+		//it was blank (it was not taken out of path soon enough)
 	//show repeat if there is at least one completed item
-	if(state.file.data[logic.listLowest(state)].list.some(id=>state.file.data[id].complete))
+	if(state.file.data[logic.listLowest(state)].list
+	.filter(x=>!!x)
+	.some(id=>state.file.data[id].complete))
 	{
 		btns.splice(2,0,v('button',{data:{pointerup:'repeat'}},'repeat'))
 	}
