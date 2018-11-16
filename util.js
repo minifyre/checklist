@@ -5,6 +5,7 @@ util.curry=(fn,...xs)=>(...ys)=>fn(...xs,...ys)
 util.empty=txt=>!txt.replace(/\s/g,'').length
 //useful when rerendering before array length is updated (e.g. pop/splice)
 util.mapEmpty=(arr,fn)=>arr.filter(x=>!!x).map(fn)
+util.rand=(max,min=1,seed=Math.random())=>Math.floor(seed*(max-min+1))
 util.themeGradient=function(theme,length)
 {
 	const
