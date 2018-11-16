@@ -29,7 +29,12 @@ input.complete=state=>logic.complete(state)
 input.delete=function(state)
 {
 	//remove deleted items from path
-	const i=state.view.path.findIndex(id=>state.view.path.includes(id))
+	const
+	indexes=state.view.selected
+			.map(id=>state.view.path.indexOf(id))
+			.filter(i=>i!==-1),
+	i=indexes.length?Math.min(...indexes):-1
+
 	if(i!==-1) state.view.path=state.view.path.slice(0,i)
 
 	state.view.selected.forEach(id=>logic.remove(state,id))
