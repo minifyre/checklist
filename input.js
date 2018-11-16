@@ -79,4 +79,5 @@ input.opts=function(state,evt)
 {
 	console.log('options menu')
 }
+input.shuffle=state=>logic.shuffle(state)
 input.toggleSelect=(state,{target})=>logic.toggleSelect(state,target.parentElement.id)
