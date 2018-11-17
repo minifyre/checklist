@@ -1,4 +1,11 @@
-logic.back=state=>state.view.path.pop()
+logic.back=function({view})
+{
+	const
+	{move,path}=view,
+	lists=move.filter(x=>!!x).length?move:path
+
+	lists.pop()
+}
 logic.complete=function(state,deselectAll=true)
 {
 	const
@@ -45,16 +52,16 @@ logic.normalize=function(state)
 	return state
 }
 logic.open=function(state,id)
-{
+{//@todo update for move
 	const
-	path=['index',...state.view.path],
+	path=state.view.path,
 	i=	path.map(id=>state.file.data[id])
-			.findIndex(item=>item.list.indexOf(id)!==-1)
+		.findIndex(item=>item.list.indexOf(id)!==-1)
 	//close sibling lists & add to the end
-	state.view.path=[...path.slice(1,i+1),id]
+	state.view.path=[...path.slice(0,i+1),id]
 }
 logic.openToggle=function(state,id)
-{
+{//@todo update for move
 	const i=state.view.path.indexOf(id)
 	if(i===-1) return console.error(`${id} was not open`)
 	state.view.path=state.view.path.slice(0,i)
@@ -64,7 +71,7 @@ logic.parent=function(state,childId)
 	return Object.entries(state.file.data)
 	.find(([_,{list}])=>list.includes(childId))[0]
 }
-
+logic.path=({view})=>view.move.filter(x=>!!x).length?view.move:view.path
 logic.remove=function(state,id)
 {
 	if(!state.file.data[id]) return//item was already deleted

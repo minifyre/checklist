@@ -1,8 +1,8 @@
 output.header=function(state)
 {
 	const
-	showBack=!!state.view.path.length,
-	placeholder=showBack?'/'+state.view.path.map(id=>state.file.data[id].text).join('/')+'/':'search',
+	showBack=state.view.path.filter(x=>!!x).length>1,
+	placeholder=showBack?'/'+state.view.path.slice(1).map(id=>state.file.data[id].text).join('/')+'/':'search',
 	{length}=state.view.selected,
 	//show edit button if only 1 item is selected
 	filter=length===1?()=>true:x=>x!=='edit',
@@ -104,7 +104,7 @@ output.render=function(state)
 	const
 	move=state.view.move.filter(x=>!!x),
 	[pointerup,mkList]=[input,output.list].map(fn=>util.curry(fn,state)),
-	[path,filter]=move.length?[move,id=>!state.view.selected.includes(id)]:[['index',...state.view.path],()=>true],
+	[path,filter]=move.length?[move,id=>!state.view.selected.includes(id)]:[state.view.path,()=>true],
 	lists=path.filter(x=>!!x).map(util.curry(mkList,filter)),
 	main=v('main',{data:{view:state.view.layout},on:{pointerup}},...lists)
 
