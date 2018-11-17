@@ -15,7 +15,7 @@ output.header=function(state)
 		v('button',{data:{pointerup:'add'}},'+')
 	]:
 	//repeat is to mark completed items in the list as uncompleted (move to list opts & add shuffle?)
-	'complete,delete,deselect,edit'//@todo make deselect a back button ligature
+	'complete,delete,move,deselect,edit'//@todo make deselect a back button ligature
 	.split(',')
 	.filter(filter)
 	.map(function(act)
@@ -84,23 +84,28 @@ output.item=function(state,opened,id,color)
 		v('span.desc',attrsDesc,item.text)
 	)
 }
-output.list=function(state,id,i,path)
+output.list=function(state,filter,id,i,path)
 {
 	const
 	item=state.file.data[id],
 	opened=path[i+1],
 	list=item.list.filter(x=>!!x),
 	//ignore the first item as that goes to the header
-	theme=util.themeGradient(state.view.theme,list.length+1).slice(1)
-	items=util.mapEmpty(item.list,(id,i)=>output.item(state,opened,id,theme[i]))
+	theme=util.themeGradient(state.view.theme,list.length+1).slice(1),
+	items=item.list
+	.filter(x=>!!x)
+	.filter(filter)
+	.map((id,i)=>output.item(state,opened,id,theme[i]))
 
 	return v('ul',{},...items)
 }
 output.render=function(state)
 {
 	const
+	move=state.view.move.filter(x=>!!x),
 	[pointerup,mkList]=[input,output.list].map(fn=>util.curry(fn,state)),
-	lists=util.mapEmpty(['index',...state.view.path],mkList),
+	[path,filter]=move.length?[move,id=>!state.view.selected.includes(id)]:[['index',...state.view.path],()=>true],
+	lists=path.filter(x=>!!x).map(util.curry(mkList,filter)),
 	main=v('main',{data:{view:state.view.layout},on:{pointerup}},...lists)
 
 	return [output.header(state),main]
