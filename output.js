@@ -2,7 +2,9 @@ output.header=function(state)
 {
 	const
 	style=`background:${state.view.theme[0]};`,
-	fn=!state.view.selected.length?'optsList':'optsItem',
+	fn=	logic.mode(state)==='move'?'optsMove':
+		!state.view.selected.length?'optsList':
+		'optsItem',
 	btns=output[fn](state)
 
 	return v('header',{on:{pointerup:evt=>input(state,evt)},style},...btns)
@@ -95,6 +97,19 @@ output.optsList=function(state)
 		v('button',{data:{pointerup:'shuffle'}},'shuffle'),
 		v('button',{data:{pointerup:'download'}},'v'),
 		v('button',{data:{pointerup:'add'}},'+')
+	]
+	.filter(x=>!!x)
+}
+output.optsMove=function(state)
+{
+	const
+	path=logic.path(state).filter(x=>!!x),
+	placeholder='/'+path.slice(1).map(id=>state.file.data[id].text).join('/')+'/'
+
+	return [
+		v('button',{data:{pointerup:'backOrOpts'}},'<'),
+		v('input.search',{placeholder,type:'text'}),
+		v('button',{data:{pointerup:'moveHere'}},'check')
 	]
 	.filter(x=>!!x)
 }
