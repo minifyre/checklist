@@ -1,19 +1,39 @@
-output.header=function(state)
+output.optsList=function(state)
 {
 	const
-	showBack=state.view.path.filter(x=>!!x).length>1,
-	placeholder=showBack?'/'+state.view.path.slice(1).map(id=>state.file.data[id].text).join('/')+'/':'search',
-	{length}=state.view.selected,
-	//show edit button if only 1 item is selected
-	filter=length===1?()=>true:x=>x!=='edit',
-	btns=!length?
+	mode=logic.mode(state),
+	path=logic.path(state).filter(x=>!!x),
+	showBack=mode==='move'||path.length>1,
+	placeholder=showBack?'/'+path.slice(1).map(id=>state.file.data[id].text).join('/')+'/':'search',
+	btns=
 	[
 		v('button',{data:{pointerup:'backOrOpts'}},showBack?'<':'='),
 		v('input.search',{placeholder,type:'text'}),
 		v('button',{data:{pointerup:'shuffle'}},'shuffle'),
 		v('button',{data:{pointerup:'download'}},'v'),
 		v('button',{data:{pointerup:'add'}},'+')
-	]:
+	]
+
+	//@todo this can cause an error if an item is added & then removed becaue 
+		//it was blank (it was not taken out of path soon enough)
+	//show repeat if there is at least one completed item
+	if(state.file.data[logic.listLowest(state)].list
+	.filter(x=>!!x)
+	.some(id=>state.file.data[id].complete))
+	{
+		btns.splice(2,0,v('button',{data:{pointerup:'repeat'}},'repeat'))
+	}
+
+	return btns
+}
+
+output.header=function(state)
+{
+	const
+	{length}=state.view.selected,
+	//show edit button if only 1 item is selected
+	filter=length===1?()=>true:x=>x!=='edit',
+	btns=!length?output.optsList(state):
 	//repeat is to mark completed items in the list as uncompleted (move to list opts & add shuffle?)
 	'complete,delete,move,deselect,edit'//@todo make deselect a back button ligature
 	.split(',')
@@ -25,8 +45,7 @@ output.header=function(state)
 		if(!input[act]) attrs.disabled='disabled'
 
 		return v('button',attrs,act)
-	}),
-	style=`background:${state.view.theme[0]};`
+	})
 
 	//@todo this can cause an error if an item is added & then removed becaue 
 		//it was blank (it was not taken out of path soon enough)
@@ -37,6 +56,8 @@ output.header=function(state)
 	{
 		btns.splice(2,0,v('button',{data:{pointerup:'repeat'}},'repeat'))
 	}
+
+	const style=`background:${state.view.theme[0]};`
 
 	return v('header',{on:{pointerup:evt=>input(state,evt)},style},...btns)
 }
