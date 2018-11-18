@@ -88,13 +88,18 @@ input.edit=function(state)
 input.move=logic.move
 input.open=function(state,{target})
 {
-	const {id}=target
+	const
+	{id}=target,
+	path=logic.path(state)
 
 	if(target.querySelector('[contenteditable]')) return
-	if(state.view.path.indexOf(id)!==-1) return logic.openToggle(state,id)
+	//@todo merge open & openToggle? 
+		//if so, will need check if item is open before addeing a new item to 
+		//an empty parent list
+	if(path.indexOf(id)!==-1) return logic.openToggle(state,id)
 
 	logic.open(state,id)
-	//new item on empty list
+
 	if(!state.file.data[id].list.length) input.add(state)
 }
 input.opts=function(state,evt)
@@ -116,4 +121,8 @@ input.repeat=function(state)
 	}	
 }
 input.shuffle=state=>logic.shuffle(state)
-input.toggleSelect=(state,{target})=>logic.toggleSelect(state,target.parentElement.id)
+input.toggleSelect=function(state,{target})
+{
+	if(logic.mode(state)==='move') input.open(state,{target:target.parentElement})
+	else logic.toggleSelect(state,target.parentElement.id)
+}
