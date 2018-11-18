@@ -1,57 +1,9 @@
-output.optsList=function(state)
-{
-	const
-	mode=logic.mode(state),
-	path=logic.path(state).filter(x=>!!x),
-	showBack=mode==='move'||path.length>1,
-	placeholder=showBack?'/'+path.slice(1).map(id=>state.file.data[id].text).join('/')+'/':'search',
-	{list}=state.file.data[logic.listLowest(state)]||{list:[]},
-	anyDone=list.some(util.curry(logic.isComplete,state)),
-	repeat=anyDone?v('button',{data:{pointerup:'repeat'}},'repeat'):false
-
-	return [
-		v('button',{data:{pointerup:'backOrOpts'}},showBack?'<':'='),
-		v('input.search',{placeholder,type:'text'}),
-		repeat,
-		v('button',{data:{pointerup:'shuffle'}},'shuffle'),
-		v('button',{data:{pointerup:'download'}},'v'),
-		v('button',{data:{pointerup:'add'}},'+')
-	]
-	.filter(x=>!!x)
-}
-
-
 output.header=function(state)
 {
 	const
-	{length}=state.view.selected,
-	//show edit button if only 1 item is selected
-	filter=length===1?()=>true:x=>x!=='edit',
-	btns=!length?output.optsList(state):
-	//repeat is to mark completed items in the list as uncompleted (move to list opts & add shuffle?)
-	'complete,delete,move,deselect,edit'//@todo make deselect a back button ligature
-	.split(',')
-	.filter(filter)
-	.map(function(act)
-	{
-		const attrs={data:{pointerup:act}}
-
-		if(!input[act]) attrs.disabled='disabled'
-
-		return v('button',attrs,act)
-	})
-
-	//@todo this can cause an error if an item is added & then removed becaue 
-		//it was blank (it was not taken out of path soon enough)
-	//show repeat if there is at least one completed item
-	if(state.file.data[logic.listLowest(state)].list
-	.filter(x=>!!x)
-	.some(id=>state.file.data[id].complete))
-	{
-		btns.splice(2,0,v('button',{data:{pointerup:'repeat'}},'repeat'))
-	}
-
-	const style=`background:${state.view.theme[0]};`
+	style=`background:${state.view.theme[0]};`,
+	fn=!state.view.selected.length?'optsList':'optsItem',
+	btns=output[fn](state)
 
 	return v('header',{on:{pointerup:evt=>input(state,evt)},style},...btns)
 }
@@ -113,6 +65,38 @@ output.list=function(state,filter,id,i,path)
 	.map((id,i)=>output.item(state,opened,id,theme[i]))
 
 	return v('ul',{},...items)
+}
+output.optsItem=function(state)
+{
+	const
+	{length}=state.view.selected,
+	edit=length===1?',edit':''
+	anyDone=state.view.selected.some(util.curry(logic.isComplete,state)),
+	repeat=anyDone?'repeat,':'',
+	btns='complete,delete,'+repeat+'move,deselect'+edit
+
+	return btns.split(',').map(act=>v('button',{data:{pointerup:act}},act))
+}
+output.optsList=function(state)
+{
+	const
+	mode=logic.mode(state),
+	path=logic.path(state).filter(x=>!!x),
+	showBack=mode==='move'||path.length>1,
+	placeholder=showBack?'/'+path.slice(1).map(id=>state.file.data[id].text).join('/')+'/':'search',
+	{list}=state.file.data[logic.listLowest(state)]||{list:[]},
+	anyDone=list.some(util.curry(logic.isComplete,state)),
+	repeat=anyDone?v('button',{data:{pointerup:'repeat'}},'repeat'):false
+
+	return [
+		v('button',{data:{pointerup:'backOrOpts'}},showBack?'<':'='),
+		v('input.search',{placeholder,type:'text'}),
+		repeat,
+		v('button',{data:{pointerup:'shuffle'}},'shuffle'),
+		v('button',{data:{pointerup:'download'}},'v'),
+		v('button',{data:{pointerup:'add'}},'+')
+	]
+	.filter(x=>!!x)
 }
 output.render=function(state)
 {
