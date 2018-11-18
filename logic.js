@@ -41,6 +41,7 @@ logic.itemUpdate=function(state,id,opts)//@todo have a text specifc fn?
 logic.listLowest=state=>logic.path(state).slice(-1)[0]
 //@todo change path to view?
 logic.mode=state=>state.view.move.filter(x=>!!x).length?'move':'path'
+logic.move=state=>state.view.move=['index']
 logic.normalize=function(state)
 {
 	if(!state.file.data.index) state.file.data.index=logic.item({id:'index'})

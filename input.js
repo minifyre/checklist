@@ -63,7 +63,7 @@ input.delete=function(state)
 
 	logic.deselectAll(state)
 }
-input.download=function(state,evt)
+input.download=function(state)
 {
 	const clone=util.clone(state.file)
 	delete clone.id
@@ -85,6 +85,7 @@ input.edit=function(state)
 	logic.deselectAll(state)
 	logic.edit(state,id)
 }
+input.move=logic.move
 input.open=function(state,{target})
 {
 	const {id}=target
