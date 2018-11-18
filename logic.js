@@ -72,7 +72,7 @@ logic.parent=function(state,childId)
 	return Object.entries(state.file.data)
 	.find(([_,{list}])=>list.includes(childId))[0]
 }
-logic.path=({view})=>view.move.filter(x=>!!x).length?view.move:view.path
+logic.path=state=>state.view[logic.mode(state)]
 logic.remove=function(state,id)
 {
 	if(!state.file.data[id]) return//item was already deleted
@@ -95,6 +95,8 @@ logic.remove=function(state,id)
 }
 //@todo if child items are marked uncomplete, 
 	//go through their parents & mark them uncomplete as well
+//@todo what should happen if a parent is uncompleted?
+	//should all of its children be uncompleted as well?
 logic.repeat=(state,...ids)=>ids.forEach(id=>state.file.data[id].complete=false)
 logic.shuffle=(state,id=logic.listLowest(state))=>util.shuffle(state.file.data[id].list)
 logic.toggleSelect=function(state,id)
