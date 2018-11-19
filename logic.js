@@ -1,5 +1,14 @@
 //@todo may need a guard to make sure 'index' is alway the first item in path
-logic.back=state=>logic.path(state).pop()
+logic.back=function(state)
+{
+	const
+	mode=logic.mode(state),
+	path=logic.path(state)
+
+	if(mode==='path'&&path.length===1) return
+
+	logic.path(state).pop()
+}
 logic.complete=function(state,deselectAll=true)
 {
 	const
