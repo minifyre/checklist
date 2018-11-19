@@ -109,7 +109,8 @@ output.optsMove=function(state)
 	return [
 		v('button',{data:{pointerup:'backOrOpts'}},'<'),
 		v('input.search',{placeholder,type:'text'}),
-		v('button',{data:{pointerup:'moveHere'}},'check')
+		v('button',{data:{pointerup:'moveHere'}},'complete')
+		//@todo add ligature for check
 	]
 	.filter(x=>!!x)
 }

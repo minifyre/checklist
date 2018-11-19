@@ -86,6 +86,16 @@ input.edit=function(state)
 	logic.edit(state,id)
 }
 input.move=logic.move
+	parent=state.view.move.slice(-1),
+	//made sure state.view.path does not have moved items
+	i=state.view.path.findIndex(id=>children.includes(id))
+
+	if(i!==-1) state.view.path=state.view.path.slice(0,i)
+
+	logic.deselectAll(state)
+	logic.moveItems(state,parent,children)
+	state.view.move=[]//@todo move into logic
+}
 input.open=function(state,{target})
 {
 	const

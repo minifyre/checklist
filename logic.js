@@ -43,6 +43,11 @@ logic.listLowest=state=>logic.path(state).slice(-1)[0]
 //@todo change path to view?
 logic.mode=state=>state.view.move.filter(x=>!!x).length?'move':'path'
 logic.move=state=>state.view.move=['index']
+logic.moveItems=function(state,parentId,children)
+{
+	children.forEach(util.curry(logic.unlink,state))
+	state.file.data[parentId].list.push(...children)
+}
 logic.normalize=function(state)
 {
 	if(!state.file.data.index) state.file.data.index=logic.item({id:'index'})
@@ -84,6 +89,12 @@ logic.remove=function(state,id)
 	//@todo if items chan have multiple parents, this needs to be overhauled
 
 	//delete links to item
+	logic.unlink(state,id)
+
+	delete state.file.data[id]
+}
+logic.unlink=function(state,id)
+{
 	Object.values(state.file.data)
 	.forEach(function({list})
 	{
@@ -91,8 +102,6 @@ logic.remove=function(state,id)
 
 		if(i!==-1) list.splice(i,1)
 	})
-
-	delete state.file.data[id]
 }
 //@todo if child items are marked uncomplete, 
 	//go through their parents & mark them uncomplete as well
