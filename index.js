@@ -1,6 +1,6 @@
 import truth from './node_modules/truth/truth.mjs'
 import v from './node_modules/v/v.mjs'
-const config={state:{}}
+const config={state:{},newline:/\r\n?|\n/}
 
 const util=
 {

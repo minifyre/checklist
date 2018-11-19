@@ -8,7 +8,7 @@ input.backOrOpts=function(state,evt)
 }
 input.back=logic.back
 input.blur=function(state,{target})
-{//@todo this should rerender parent's length icon
+{
 	const
 	{innerText:text}=target,
 	{id}=target.parentElement,
@@ -20,6 +20,18 @@ input.blur=function(state,{target})
 		else target.innerHTML=state.file.data[id].text
 		//previous line is necessary as the text has not changed 
 			//in the virtual dom & so it will not get re-rendered
+	}
+	else if(text.match(config.newline))//@todo integrate this into repeat
+	{
+		const
+		[val,...vals]=text.split(config.newline).filter(x=>x.length),
+		parentId=logic.parent(state,id),
+		childIndex=state.file.data[parentId].list.indexOf(id)
+
+		target.innerHTML=val
+		logic.itemUpdate(state,id,{text:val})
+
+		vals.forEach((text,i)=>logic.itemAdd(state,logic.item({text}),parentId,childIndex+i+1))
 	}
 	else if(text.match(repeat))//@todo should this be moved into logic.itemAdd?
 	{

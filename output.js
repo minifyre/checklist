@@ -106,7 +106,7 @@ output.optsMove=function(state)
 	path=logic.path(state).filter(x=>!!x),
 	placeholder='/'+path.slice(1).map(id=>state.file.data[id].text).join('/')+'/'
 
-	return [
+	return [//@todo make a ligature named back that is an arrow pointing left
 		v('button',{data:{pointerup:'backOrOpts'}},'<'),
 		v('input.search',{placeholder,type:'text'}),
 		v('button',{data:{pointerup:'moveHere'}},'complete')
