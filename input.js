@@ -86,6 +86,10 @@ input.edit=function(state)
 	logic.edit(state,id)
 }
 input.move=logic.move
+input.moveHere=function(state)
+{//@todo move state assignments into logic
+	const
+	children=state.view.selected.slice(),
 	parent=state.view.move.slice(-1),
 	//made sure state.view.path does not have moved items
 	i=state.view.path.findIndex(id=>children.includes(id))
