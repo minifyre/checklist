@@ -1,9 +1,10 @@
 import truth from './node_modules/truth/truth.mjs'
 import v from './node_modules/v/v.mjs'
 
-const config={state:{},newline:/\r\n?|\n/}
 
-const util=
+const
+config={state:{},newline:/\r\n?|\n/},
+util=
 {
 	id:()=>([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,util.idHelper),
 	idHelper:c=>(c^util.idRand()[0]&15>>c/4).toString(16),
@@ -15,6 +16,9 @@ const util=
 
 	importFiles:paths=>Promise.all(paths.map(x=>fetch(x).then(x=>x.text()))),
 }
+util.clone=x=>JSON.parse(JSON.stringify(x))
+util.curry=(fn,...xs)=>(...ys)=>fn(...xs,...ys)
+util.flatten=(a,b)=>a.concat(b)
 util.mkFile=(...opts)=>util.mk({encoding:'utf-8',modified:Date.now(),path:''},...opts)
 util.mkFileCode=(type='html',...opts)=>util.mkFile({category:'code',errors:[],type,value:''},...opts)
 util.mkFileFont=(type='otf',...opts)=>util.mkFile({category:'font',type},...opts)
