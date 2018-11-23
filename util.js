@@ -33,9 +33,6 @@ util.themeGradient=function(theme,length)
 		return `rgb(${rgb.join(',')})`
 	})
 }
-
-util.flatten=(a,b)=>a.concat(b)
-
 util.txt2txts=function(txt)
 {
 	return txt.split(config.newline)
