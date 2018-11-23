@@ -1,7 +1,6 @@
 import truth from './node_modules/truth/truth.mjs'
 import v from './node_modules/v/v.mjs'
 
-
 const
 config={state:{},newline:/\r\n?|\n/},
 util=
@@ -15,7 +14,22 @@ util=
 	mk:(...opts)=>Object.assign({id:util.id()},...opts),
 
 	importFiles:paths=>Promise.all(paths.map(x=>fetch(x).then(x=>x.text()))),
+},
+logic=opts=>logic.normalize(util.mkState(opts)),
+output=x=>output.render(x),
+input=function(state,evt)
+{
+	const
+	{target,type}=evt,
+	attr=`data-${type}`,
+	el=util.findParent(target,`[${attr}]`)
+
+	if(!el) return
+
+	const fn=el.getAttribute(attr)
+	return input[fn](state,Object.assign({},evt,{target:el}))
 }
+
 util.clone=x=>JSON.parse(JSON.stringify(x))
 util.curry=(fn,...xs)=>(...ys)=>fn(...xs,...ys)
 util.flatten=(a,b)=>a.concat(b)
@@ -58,24 +72,8 @@ util.mkState=function(opts)
 	return state
 }
 
-const logic=opts=>logic.normalize(util.mkState(opts))
 logic.normalize=x=>x
-
-const output=x=>output.render(x)
 output.render=x=>x
-
-function input(state,evt)
-{
-	const
-	{target,type}=evt,
-	attr=`data-${type}`,
-	el=util.findParent(target,`[${attr}]`)
-
-	if(!el) return
-
-	const fn=el.getAttribute(attr)
-	return input[fn](state,Object.assign({},evt,{target:el}))
-}
 
 export default async function silo(scope=silo)
 {
