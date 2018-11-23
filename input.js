@@ -7,6 +7,13 @@ input.backOrOpts=function(state,evt)
 	(state.view.path.length?input.back:input.opts)(state,evt)
 }
 input.back=logic.back
+
+util.txt2txts=function(txt)
+{
+	return txt.split(config.newline)
+	.filter(x=>x.length)
+}
+
 input.blur=function(state,{target})
 {
 	const
@@ -24,7 +31,7 @@ input.blur=function(state,{target})
 	else if(text.match(config.newline))//@todo integrate this into repeat
 	{
 		const
-		[val,...vals]=text.split(config.newline).filter(x=>x.length),
+		[val,...vals]=util.txt2txts(text),
 		parentId=logic.parent(state,id),
 		childIndex=state.file.data[parentId].list.indexOf(id)
 

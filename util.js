@@ -37,3 +37,9 @@ util.themeGradient=function(theme,length)
 		return `rgb(${rgb.join(',')})`
 	})
 }
+
+util.txt2txts=function(txt)
+{
+	return txt.split(config.newline)
+	.filter(x=>x.length)
+}
