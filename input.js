@@ -7,15 +7,11 @@ input.backOrOpts=function(state,evt)
 	(state.view.path.length?input.back:input.opts)(state,evt)
 }
 input.back=logic.back
-
-
-
 input.blur=function(state,{target})
 {
 	const
 	{innerText:text}=target,
-	{id}=target.parentElement,
-	repeat=/X:\d+-\d+/
+	{id}=target.parentElement
 
 	if(util.empty(text))
 	{
@@ -24,38 +20,18 @@ input.blur=function(state,{target})
 		//previous line is necessary as the text has not changed 
 			//in the virtual dom & so it will not get re-rendered
 	}
-	else if(text.match(config.newline))//@todo integrate this into repeat
+	else
 	{
 		const
 		[val,...vals]=util.txt2txts(text),
 		parentId=logic.parent(state,id),
 		childIndex=state.file.data[parentId].list.indexOf(id)
-
+	
 		target.innerHTML=val
 		logic.itemUpdate(state,id,{text:val})
-
-		vals.forEach((text,i)=>logic.itemAdd(state,logic.item({text}),parentId,childIndex+i+1))
+	
+		vals.forEach((text,i)=>logic.itemAdd(state,logic.item({text}),parentId,childIndex+i+1))	
 	}
-	else if(text.match(repeat))//@todo should this be moved into logic.itemAdd?
-	{
-		const
-		[replace]=text.match(repeat),//X:11-2
-		[min,max]=replace.split(':')[1]//11-2
-				.split('-')//[11','2']
-				.map(d=>parseInt(d))//[11,2]
-				.sort((a,b)=>a-b),//[2,11]//sort() will keep 11 in front
-		[val,...vals]=Array(max-min+1)
-					.fill(min)
-					.map((d,i)=>d+i)
-					.map(d=>text.replace(repeat,d)),
-		parentId=logic.parent(state,id),
-		childIndex=state.file.data[parentId].list.indexOf(id)
-
-		logic.itemUpdate(state,id,{text:val})
-
-		vals.forEach((text,i)=>logic.itemAdd(state,logic.item({text}),parentId,childIndex+i+1))
-	}
-	else logic.itemUpdate(state,id,{text})
 
 	logic.edit(state)
 
