@@ -8,11 +8,7 @@ input.backOrOpts=function(state,evt)
 }
 input.back=logic.back
 
-util.txt2txts=function(txt)
-{
-	return txt.split(config.newline)
-	.filter(x=>x.length)
-}
+
 
 input.blur=function(state,{target})
 {
