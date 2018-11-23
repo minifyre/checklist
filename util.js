@@ -38,11 +38,14 @@ util.themeGradient=function(theme,length)
 	})
 }
 
+util.flatten=(a,b)=>a.concat(b)
+
 util.txt2txts=function(txt)
 {
 	return txt.split(config.newline)
 			.filter(x=>x.length)
 			.map(util.txtRepeat)
+			.reduce(util.flatten,[])
 }
 util.txtRepeat=function(txt)
 {
