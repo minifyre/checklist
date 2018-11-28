@@ -1,5 +1,3 @@
-import truth from './node_modules/truth/truth.mjs'
-import v from './node_modules/v/v.mjs'
 
 const
 config={state:{},newline:/\r\n?|\n/},
@@ -75,15 +73,4 @@ util.mkState=function(opts)
 logic.normalize=x=>x
 output.render=x=>x
 
-export default async function silo(scope=silo)
-{
-	const
-	props='config,util,logic,input,output',
-	keys='{'+Object.keys(silo).join(',')+'}',
-	files=await Promise.all(props.split(',').map(file=>fetch(file+'.js'))),
-	txt=await Promise.all(files.map(file=>file.text()))
-
-	return new Function(`${keys}`,[txt,`return ${keys}`].join('\n'))(scope)
-}
-
-Object.assign(silo,{config,util,logic,input,output,truth,v})
+export default {config,util,logic,input,output}
