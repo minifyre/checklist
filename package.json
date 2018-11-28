@@ -1,0 +1,15 @@
+{
+	"name": "Checklist",
+	"description": "Another to do list",
+	"homepage": "https://github.com/minifyre/checklist",
+	"license": "MIT",
+	"version": "0.5.0",
+	"dependencies": {
+		"silo": "minifyre/silo",
+		"truth": "minifyre/truth",
+		"v": "minifyre/v"
+	},
+	"devDependencies": {
+		"cherub": "minifyre/cherub"
+	}
+}
