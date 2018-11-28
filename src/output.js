@@ -72,7 +72,7 @@ output.optsItem=function(state)
 {
 	const
 	{length}=state.view.selected,
-	edit=length===1?',edit':''
+	edit=length===1?',edit':'',
 	anyDone=state.view.selected.some(util.curry(logic.isComplete,state)),
 	repeat=anyDone?'repeat,':'',
 	btns='complete,delete,'+repeat+'move,deselect'+edit
