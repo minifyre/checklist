@@ -1,10 +1,12 @@
 import silo from './silo.js'
+import truth from './node_modules/truth/truth.mjs'
+import v from './node_modules/v/v.mjs'
 
-onload=async function()
+const {config,util,logic,output,input}=silo
+
+export default Object.assign(async function init()
 {
 	const
-	scope=Object.assign(silo,{}),//add custom dependencies here & next line
-	{config,util,logic,output,input,truth,v}=await silo(scope),
 	state=logic(),
 	render=truth.compile(({state})=>v.render(document.body,state,output))
 
@@ -15,4 +17,4 @@ onload=async function()
 	.catch(console.error)
 
 	truth(state,render)
-}
+},silo)
