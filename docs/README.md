@@ -1,7 +1,7 @@
 # checklist
 Another to do list.
 
-![Checklist App Icon](./icon.svg)
+![Checklist App Icon](../icon.svg)
 
 ## Tips
 
