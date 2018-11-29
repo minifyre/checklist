@@ -4,17 +4,11 @@ import v from './node_modules/v/v.mjs'
 
 const {config,util,logic,output,input}=silo
 
-export default Object.assign(async function init()
+export default Object.assign(async function init(initialState)
 {
 	const
-	state=logic(),
+	state=logic(initialState),
 	render=truth.compile(({state})=>v.render(document.body,state,output))
-
-	//@todo remove tmp debugging file code
-	await fetch('default.checklist.json')
-	.then(res=>res.json())
-	.then(file=>Object.assign(state.file,file))
-	.catch(console.error)
 
 	truth(state,render)
 },silo)
