@@ -30,7 +30,6 @@ logic.complete=function(state,deselectAll=true)
 logic.deselectAll=state=>state.view.selected=[]
 logic.edit=(state,id='')=>state.view.edit=id
 logic.isComplete=(state,id)=>(state.file.data[id]||{}).complete
-logic.item=(...opts)=>util.mk({complete:false,text:'',list:[]},...opts)
 logic.itemAdd=function(state,item,parentId='index',at=-1)
 {
 	const {id}=item,

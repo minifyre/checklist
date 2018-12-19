@@ -14,3 +14,4 @@ config.state=
 		selected:[]
 	}
 }
+config.item={text:'',list:[]}
