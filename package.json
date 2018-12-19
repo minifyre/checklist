@@ -5,6 +5,7 @@
 	"license": "MIT",
 	"version": "0.5.0",
 	"dependencies": {
+		"list": "minifyre/list",
 		"silo": "minifyre/silo",
 		"truth": "minifyre/truth",
 		"v": "minifyre/v"
