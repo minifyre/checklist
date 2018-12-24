@@ -9,7 +9,7 @@ output.header=function(state)
 
 	mode=logic.mode(state),
 	path=logic.path(state).filter(x=>!!x),
-	back=mode==='move'||path.length>1,
+	back=mode==='move'||path.length>1
 
 	return v('header',{data:{back},on:{pointerup:evt=>input(state,evt)},style},...btns)
 }
