@@ -4,6 +4,10 @@ import v from './node_modules/v/v.mjs'
 
 const
 {config,util,logic,output,input}=silo,
-{curry}=util
+{curry}=util,
+cache=//only used on a per-instance basis, not to be shared accross devices!
+{
+	themeGradients:{}
+}
 
 export default silo

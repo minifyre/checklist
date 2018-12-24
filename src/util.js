@@ -21,8 +21,14 @@ util.optsListFilter=function(state)
 
 	return x=>!exclude.includes(x)
 }
-util.themeGradient=function(theme,length)
+util.themeGradientCreate=function(theme)
 {
+	const
+	key=JSON.stringify(theme),
+	cached=cache.themeGradients[key]
+
+	if(cached) return cached
+	
 	const
 	h=100,
 	w=1,
@@ -34,14 +40,28 @@ util.themeGradient=function(theme,length)
 	ctx.fillStyle=grd
 	ctx.fillRect(0,0,w,h)
 
+	return cache.themeGradients[key]=
+	[...ctx.getImageData(0,0,1,100).data]
+	.filter((_,i)=>(i+1)%4)//remove alpha channels (@todo make sure this works as intended)
+	.reduce(curry(util.groupBy,3),[])
+	.map(arr=>`rgb(${arr.join(',')})`)
+}
+util.themeGradient=function(theme,length)
+{
+	const cached=util.themeGradientCreate(theme)
+
 	return Array(length)
 	.fill(1)
-	.map(function(_,i,{length})
-	{
-		const
-		y=parseInt(i/length*100),
-		rgb=ctx.getImageData(0,y,1,1).data.slice(0,3)
+	.map((_,i,{length})=>parseInt(i/length*100))
+	.map(i=>cached[i])
+}
+//generic
+util.groupBy=function(groupSize,rtn,item,i)
+{
+	const j=Math.floor(i/groupSize)
 
-		return `rgb(${rgb.join(',')})`
-	})
+	!rtn[j]?rtn[j]=[item]:
+			rtn[j].push(item)
+
+	return rtn
 }
