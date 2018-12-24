@@ -50,7 +50,7 @@ output.item=function(state,opened,id,color)
 				.length+'/'+item.list.length:
 			item.list.length
 
-	attrsDesc.style=`background-image:linear-gradient(to right,transparent ${percent}%, #0003 ${percent}%)`
+	attrsDesc.style=`background-image:linear-gradient(to right,#fff9 ${percent}%, #f8f8f8 ${percent}%)`
 
 	return v('li',attrs,
 		v('button.icon',{data:{pointerup:'toggleSelect'}},icon),

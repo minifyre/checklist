@@ -112,6 +112,7 @@ header::after,
 }
 .desc
 {
+	color:#222;
 	flex:1 1 auto;
 	padding:0 var(--margin);
 	min-height:100%;
