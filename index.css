@@ -86,6 +86,9 @@ header::after,
 	position:absolute;
 	width:100%;
 }
+/*@todo allow on bigger screens */
+[data-back="true"] [data-pointerup="opts"]{display:none;}
+[data-back="false"] [data-pointerup="back"]{display:none;}
 .search
 {
 	background:transparent;

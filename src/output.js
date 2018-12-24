@@ -5,9 +5,13 @@ output.header=function(state)
 	fn=	logic.mode(state)==='move'?'optsMove':
 		!state.view.selected.length?'optsList':
 		'optsItem',
-	btns=output[fn](state)
+	btns=output[fn](state),
 
-	return v('header',{on:{pointerup:evt=>input(state,evt)},style},...btns)
+	mode=logic.mode(state),
+	path=logic.path(state).filter(x=>!!x),
+	back=mode==='move'||path.length>1,
+
+	return v('header',{data:{back},on:{pointerup:evt=>input(state,evt)},style},...btns)
 }
 output.item=function(state,opened,id,color)
 {
@@ -80,7 +84,8 @@ output.optsList=function(state)
 	repeat=anyDone?v('button',{data:{pointerup:'repeat'}},'repeat'):false
 
 	return [
-		v('button',{data:{pointerup:'backOrOpts'}},showBack?'<':'='),
+		v('button',{data:{pointerup:'back'}},'<'),
+		v('button',{data:{pointerup:'opts'}},'='),
 		v('input.search',{placeholder,type:'text'}),
 		repeat,
 		v('button',{data:{pointerup:'shuffle'}},'shuffle'),
