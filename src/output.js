@@ -68,17 +68,6 @@ output.list=function(state,filter,id,i,path)
 
 	return v('ul',{},...items)
 }
-output.optsItem=function(state)
-{
-	const
-	{length}=state.view.selected,
-	edit=length===1?',edit':'',
-	anyDone=state.view.selected.some(util.curry(logic.isComplete,state)),
-	repeat=anyDone?'repeat,':'',
-	btns='complete,delete,'+repeat+'move,deselect'+edit
-
-	return btns.split(',').map(act=>v('button',{data:{pointerup:act}},act))
-}
 output.optsList=function(state)
 {
 	const

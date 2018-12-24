@@ -1,3 +1,15 @@
+util.optsItemFilter=function(state)
+{
+	const
+	exclude=[],
+	{selected}=state.view,
+	anyDone=selected.some(curry(logic.isComplete,state))
+
+	if(selected.length!==1) exclude.push('edit') 
+	if(!anyDone) exclude.push('repeat') 
+
+	return x=>!exclude.includes(x)
+}
 util.themeGradient=function(theme,length)
 {
 	const
