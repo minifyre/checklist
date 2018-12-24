@@ -10,6 +10,17 @@ util.optsItemFilter=function(state)
 
 	return x=>!exclude.includes(x)
 }
+util.optsListFilter=function(state)
+{
+	const
+	exclude=[],
+	{list}=state.file.data[logic.listLowest(state)]||{list:[]},
+	anyDone=list.some(curry(logic.isComplete,state))
+
+	if(!anyDone) exclude.push('repeat')
+
+	return x=>!exclude.includes(x)
+}
 util.themeGradient=function(theme,length)
 {
 	const

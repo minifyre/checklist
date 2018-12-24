@@ -72,25 +72,3 @@ output.list=function(state,filter,id,i,path)
 
 	return v('ul',{},...items)
 }
-output.optsList=function(state)
-{
-	const
-	mode=logic.mode(state),
-	path=logic.path(state).filter(x=>!!x),
-	showBack=mode==='move'||path.length>1,
-	placeholder=showBack?'/'+path.slice(1).map(id=>state.file.data[id].text).join('/')+'/':'search',
-	{list}=state.file.data[logic.listLowest(state)]||{list:[]},
-	anyDone=list.some(util.curry(logic.isComplete,state)),
-	repeat=anyDone?v('button',{data:{pointerup:'repeat'}},'repeat'):false
-
-	return [
-		v('button',{data:{pointerup:'back'}},'<'),
-		v('button',{data:{pointerup:'opts'}},'='),
-		v('input.search',{placeholder,type:'text'}),
-		repeat,
-		v('button',{data:{pointerup:'shuffle'}},'shuffle'),
-		v('button',{data:{pointerup:'download'}},'v'),
-		v('button',{data:{pointerup:'add'}},'+')
-	]
-	.filter(x=>!!x)
-}
