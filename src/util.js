@@ -1,3 +1,5 @@
+//+1 ignores the first item as that goes to the header
+util.itemColor=({view},_,i,{length})=>util.themeGradient(view.theme,length+1)[i+1]
 util.optsItemFilter=function(state)
 {
 	const
@@ -28,7 +30,7 @@ util.themeGradientCreate=function(theme)
 	cached=cache.themeGradients[key]
 
 	if(cached) return cached
-	
+
 	const
 	h=100,
 	w=1,
@@ -42,7 +44,7 @@ util.themeGradientCreate=function(theme)
 
 	return cache.themeGradients[key]=
 	[...ctx.getImageData(0,0,1,100).data]
-	.filter((_,i)=>(i+1)%4)//remove alpha channels (@todo make sure this works as intended)
+	.filter((_,i)=>(i+1)%4)//remove alpha channels
 	.reduce(curry(util.groupBy,3),[])
 	.map(arr=>`rgb(${arr.join(',')})`)
 }
