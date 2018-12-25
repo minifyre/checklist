@@ -13,10 +13,11 @@ output.header=function(state)
 
 	return v('header',{data:{back},on:{pointerup:evt=>input(state,evt)},style},...btns)
 }
-output.item=function(state,opened,id,color)
+output.item=function(state,opened,id,i,arr)
 {
 	const
 	item=state.file.data[id],
+	color=util.itemColor(state,id,i,arr),
 	//@todo id attr could be an issue if child can have multiple parents 
 		//& thus show up multiple times
 	attrs={data:{pointerup:'open'},id,on:{},style:`background-color:${color};`},
@@ -56,19 +57,4 @@ output.item=function(state,opened,id,color)
 		v('button.icon',{data:{pointerup:'toggleSelect'}},icon),
 		v('span.desc',attrsDesc,item.text)
 	)
-}
-output.list=function(state,filter,id,i,path)
-{
-	const
-	item=state.file.data[id],
-	opened=path[i+1],
-	list=item.list.filter(x=>!!x),
-	//ignore the first item as that goes to the header
-	theme=util.themeGradient(state.view.theme,list.length+1).slice(1),
-	items=item.list
-	.filter(x=>!!x)
-	.filter(filter)
-	.map((id,i)=>output.item(state,opened,id,theme[i]))
-
-	return v('ul',{},...items)
 }
