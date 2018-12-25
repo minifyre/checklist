@@ -2,16 +2,14 @@ output.header=function(state)
 {
 	const
 	style=`background:${state.view.theme[0]};`,
-	fn=	logic.mode(state)==='move'?'optsMove':
-		!state.view.selected.length?'optsList':
-		'optsItem',
-	btns=output[fn](state),
-
+	headerType=	logic.mode(state)==='move'?'optsMove':
+				!state.view.selected.length?'optsList':
+				'optsItem',
+	btns=output[headerType](state),
 	mode=logic.mode(state),
-	path=logic.path(state).filter(x=>!!x),
-	back=mode==='move'||path.length>1
+	back=mode==='move'||logic.path(state).filter(x=>!!x).length>1
 
-	return v('header',{data:{back},on:{pointerup:evt=>input(state,evt)},style},...btns)
+	return v('header',{data:{back},on:{pointerup:curry(input,state)},style},...btns)
 }
 output.item=function(state,opened,id,i,arr)
 {
